@@ -97,20 +97,24 @@ for letter in word:
   t.write("_  ", True, font=("Courier", 14, "normal"))
 t.pendown()
 error = 0
+correct_num_letters = 0
 win = False
-input_letters = []
+input_letters = set()
+
 while error < 7 and not win:
   input_letter = t.textinput("Hangman", "choose a letter(lower case)")
   if input_letter in input_letters:
     print("Your letter has already been used. Try again")
     continue
   else:
-    input_letters.append(input_letter)
+    input_letters.add(input_letter)
   if input_letter not in word:
     error += 1
+  else:
+    correct_num_letters += word.count(input_letter)
   t.setheading(0)
   draw_hangman(error)
   draw_letters(input_letter, word)
-  if len(input_letters) == len(word):
+  if correct_num_letters == len(word):
     win = True
 draw_win()
